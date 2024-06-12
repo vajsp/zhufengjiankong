@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>前端监控sdk</title>
+    </head>
+    <body>
+        <div id="container">
+            <div class="content">
+                <input
+                    type="button"
+                    value="点击抛出js错误"
+                    onclick="errorClick()"
+                />
+                <input
+                    type="button"
+                    value="点击抛出Promise错误"
+                    onclick="promiseErrorClick()"
+                />
+
+                <input
+                    id="successBtn"
+                    type="button"
+                    value="点击抛出Promise错误"
+                    onclick="sendSuccess()"
+                />
+
+                <input
+                    id="errorBtn"
+                    type="button"
+                    value="点击抛出Promise错误"
+                    onclick="sendError()"
+                />
+            </div>
+        </div>
+        <script>
+            function errorClick() {
+                window.some.error = 'error';
+            }
+            function promiseErrorClick() {
+                new Promise(function (resolve, reject) {
+                    window.some.error = 'error';
+                });
+            }
+
+            function sendSuccess() {
+                let xhr = new XMLHttpRequest();
+                xhr.open('GET', '/success', true);
+                xhr.responseType = 'json';
+                xhr.onload = function () {
+                    console.log(xhr.response);
+                };
+                xhr.send();
+            }
+
+            function sendError() {
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', '/error', true);
+                xhr.responseType = 'json';
+                xhr.onload = function () {
+                    console.log(xhr.response);
+                };
+                xhr.send('name=zhufeng');
+            }
+        </script>
+    </body>
+</html>
